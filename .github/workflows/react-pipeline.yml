@@ -8,8 +8,6 @@ on:
 jobs:
   containers:
     runs-on: ubuntu-latest
-    env: 
-      DOCKER_TAG: hello-world-react
     steps: 
       - name: Checkout
         uses: actions/checkout@v3
@@ -21,11 +19,11 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build Docker image
-        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/${DOCKER_TAG}:${{ github.sha }} .
+        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/hello-world-react:${{ github.sha }} .
 
       - name: Push Docker image to Docker Hub
         uses: docker/build-push-action@v2
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${DOCKER_TAG}:${{ github.sha }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/hello-world-react:${{ github.sha }}
